@@ -1,0 +1,69 @@
+<h1>User Management System</h1>
+<br>
+<form (ngSubmit)="addUser()" #userForm="ngForm">
+
+    <input type="text" name="name" placeholder="Name" [(ngModel)]="newName">
+    <input type="email" name="email" placeholder="Email" [(ngModel)]="newEmail">
+    <button type="submit">Add User</button>
+
+</form>
+
+<br>
+<hr>
+<br>
+
+<ul class="user-list">
+    <li *ngFor="let user of users$ | async">
+        <h2>{{user.name}}</h2>
+        <p>{{user.email}}</p>
+    </li>
+</ul>
+,
+
+import { Component, OnInit } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+
+interface User{
+  id: Number,
+  name: string,
+  email: string
+}
+
+@Component({
+  selector: 'app-user',
+  templateUrl: './user.component.html',
+  styleUrls: ['./user.component.css']
+})
+export class UserComponent implements OnInit{
+
+  users: User[] = [];
+
+  private usersSubject = new BehaviorSubject<User[]>(this.users);
+
+  constructor(){};
+
+  users$ : Observable<User[]>;
+  
+  newName:string = '';
+  newEmail:string = '';
+
+  ngOnInit(): void {
+    this.users$ = this.usersSubject.asObservable();
+  }
+  
+  addUser(){
+    if(!this.newName || !this.newEmail) return;
+
+    const newUser: User = {
+      id: Date.now(),
+      name: this.newName,
+      email: this.newEmail
+    }
+
+    this.users = [...this.users, newUser];
+
+    this.usersSubject.next(this.users);
+
+  }
+
+}

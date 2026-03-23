@@ -1,0 +1,110 @@
+<h1>Notes</h1>
+
+<form #noteForm="ngForm" (ngSubmit)="addNote()">
+
+    <input type="text" name="title" placeholder="title" required  [(ngModel)]="newNoteTitle" >
+    <br><br>
+    <textarea name="body"  placeholder="body" required [(ngModel)]="newNoteBody"></textarea>
+    <br><br>
+
+    <button type="submit">Add Note</button>
+
+</form>
+
+<br><br>
+<hr>
+<br>
+
+<ul>
+    <li *ngFor="let note of notes$ | async">
+        <h2>{{note.title }}</h2>
+        <p>{{note.body}}</p>
+    </li>
+</ul>
+
+,
+
+import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { BehaviorSubject, Observable } from 'rxjs';
+// RxJS is a library that helps angular handle async data
+
+interface Note{
+  id: Number,
+  title: string,
+  body: string
+}
+
+@Component({
+  selector: 'app-note',
+  templateUrl: './note.component.html',
+  styleUrls: ['./note.component.css']
+})
+export class NoteComponent implements OnInit{
+
+  //local database - notes are stored here
+  //currently empty array, not null because UI may crash when iterating
+  notes:Note[] = [];
+
+  // BehaviourSubject is a smart observable - it has 2 powers:-
+  //1. stores latest values
+  //2. immediately sends it to new subscribers
+  // its like a scoreboard in cricket stadium - even if you enter late, you instantly sees the latest score
+  // creating a stream that stores array of objects
+  private notesSubject = new BehaviorSubject<Note[]>(this.notes);
+
+  constructor(){}
+
+
+  // Observable is like a youtube live stream , you subscribe , you recieve data continuously
+  // Ex: API data, chat messages , notifications, user typing
+  // $ is just a naming convention, it means this variable is an observable stream
+  notes$ : Observable<Note[]>;
+
+  ngOnInit(): void {
+    //we are converting BehaviourSubject into Observable
+    // why? security
+    //BehaviourSubject - can emit values 
+    //Observable - only listen
+    this.notes$ = this.notesSubject.asObservable();
+  }
+
+  newNoteTitle:string='';
+  newNoteBody:string='';
+
+  addNote(): void{
+    if(!this.newNoteTitle.trim() || !this.newNoteBody.trim()){
+      return;
+    }
+
+    const newNote: Note={
+      id: Date.now(),
+      title: this.newNoteTitle,
+      body:this.newNoteBody
+    }
+
+    this.notes = [...this.notes, newNote];
+    // this.notes.push(newNote);
+    //Avoid:
+    //this.notes.push(newNote);
+    //because change detection  + reactive patterns work better with new references
+
+    //instead of editing old notebook.. create a new notebook with old+new pages
+
+    //emit new value - next() is the live button
+    //everyone subscribed gets the update instantly - UI refreshes automatically - no manual DOM manipulation
+
+    this.notesSubject.next(this.notes);
+
+    this.newNoteTitle='';
+    this.newNoteBody='';
+  }
+
+}
+
+// BehaviourSubject stores data,
+//Observable broadcasts it
+//async pipe listens to it
+
+// Ritwik = behaviourSubject
+// Omkar = Observable - notes$
