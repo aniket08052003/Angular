@@ -1,0 +1,51 @@
+<div>
+    <input type="text" [(ngModel)] = "newItemName">
+    <button (click)="addItem()">Add Item</button>
+</div>
+<ul>
+    <li *ngFor="let item of items; let i = index">
+        <span [ngClass]="item.purchased ? 'strike' : '' ">{{item.name}}</span>
+        <button (click)="purchaseItem(item)" >Purchased</button>
+        <button (click)="deleteItem()">Delete</button>
+    </li>
+</ul>
+
+,
+
+import { Component } from '@angular/core';
+
+interface item{
+  name: string;
+  purchased: boolean;
+}
+
+@Component({
+  selector: 'app-shopping-list',
+  templateUrl: './shopping-list.component.html',
+  styleUrls: ['./shopping-list.component.css']
+})
+export class ShoppingListComponent {
+  items = [];
+  newItemName = '';
+  purchased = false;
+
+  addItem(){
+    const trim = this.newItemName.trim();
+
+    if(trim){
+      this.items.push({
+        name : trim,
+        purchased: false
+      })
+      this.newItemName='';
+    }
+  }
+
+  purchaseItem(item: item){
+    item.purchased = !item.purchased;
+  }
+
+  deleteItem(index: number){
+    this.items.splice(index, 1);
+  }
+}

@@ -1,0 +1,44 @@
+
+<div>
+    <h1>To-Do List</h1>
+    <input type="text" placeholder="Add a new task" [(ngModel)]="newTask">
+    <button (click)="addTask()">Add</button>
+</div>
+
+<ul>
+    <li class="task-item" *ngFor="let task of tasks; let i= index">
+        <span [ngClass]="task.completed ? 'strike': '' ">{{task.title}}</span>
+        <button (click)="completeTask(task)">Complete</button>
+        <button (click)="deleteTask(index)">Delete</button>
+    </li>
+</ul>
+
+,
+
+import { TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { AppComponent } from './app.component';
+import { TodoListComponent } from './todo-list/todo-list.component';
+import { FormsModule } from '@angular/forms';
+
+describe('AppComponent', () => {
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [
+        RouterTestingModule,
+        FormsModule
+      ],
+      declarations: [
+        AppComponent,
+        TodoListComponent
+      ],
+    }).compileComponents();
+  });
+
+  fit(`should_have_a_title`, () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    expect(app.title).toEqual('TodoList');
+  });
+
+});
