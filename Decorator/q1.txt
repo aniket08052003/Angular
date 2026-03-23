@@ -1,0 +1,69 @@
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-product-list',
+  templateUrl: './product-list.component.html',
+  styleUrls: ['./product-list.component.css']
+})
+export class ProductListComponent {
+  products = [
+    {name:"Apple iPhone 13",description:"The latest iPhone with A15 Bionic chip and improved camera system."},
+    {name:"Samsung Galaxy S21",description:"High-end Android smartphone with powerful processor and advanced camera."},
+    {name:"Google Pixel 6",description:"Google's newest smartphone featuring the custom Tensor chip and unique design."}
+  ]
+
+  selectedProduct: any =null;
+  
+  selectProduct(index: number){
+    this.selectedProduct = this.products[index];
+  }
+
+  clearSelectedProduct(){
+    this.selectedProduct = null;
+  }
+}
+
+,
+<h2>Products</h2>
+
+<ul>
+    <li *ngFor="let product of products; let i=index" (click)="selectProduct(i)">
+    {{product.name}}
+    </li>
+</ul>
+
+<!-- <p *ngIf="selectedProduct">
+{{selectedProduct.description}}
+</p> -->
+
+<app-product-detail *ngIf="selectedProduct" [product]="selectedProduct" (clearSelection)="clearSelectedProduct()"></app-product-detail>
+,
+<div id="product-detail" >
+    <h3>{{product?.name}} Details</h3>
+    <p>{{product?.description}}</p>     
+    <button (click)="clear()">Clear Selection</button>
+</div>
+
+<!-- // ?. safe Navigation Operator -> prevents errors when product is null -->
+
+,
+
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+
+@Component({
+  selector: 'app-product-detail',
+  templateUrl: './product-detail.component.html',
+  styleUrls: ['./product-detail.component.css']
+})
+export class ProductDetailComponent {
+  @Input()
+  product!: any;
+
+  @Output()
+  clearSelection = new EventEmitter<void>()
+
+  clear(){
+    this.clearSelection.emit();
+  }
+
+}

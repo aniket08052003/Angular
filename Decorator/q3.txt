@@ -1,0 +1,67 @@
+<h2>Items</h2>
+<ul>
+    <li *ngFor="let item of items; let i = index" (click)="selectItem(i)">
+        {{item.name}}
+    </li>
+</ul>
+
+<app-item-detail *ngIf="selectedItem" [item]="selectedItem" (clearSelection)="clearSelectedItem()"></app-item-detail>
+
+,
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-item-list',
+  templateUrl: './item-list.component.html',
+  styleUrls: ['./item-list.component.css']
+})
+export class ItemListComponent {
+
+  items = [
+    {name:'Apple MacBook Pro', description:'High-performance laptop with M1 chip and Retina display.'},
+    {name:'Sony WH-1000XM4 Headphones', description:'Noise -cancelling wireless headphones with superior sound quality.'},
+    {name:'Nintendo Switch', description:'Versatile gaming console for home and on-the-go entertainment.'}
+  ]
+
+  selectedItem: any = null;
+
+  selectItem(index: number){
+    this.selectedItem = this.items[index];
+  }
+
+  clearSelectedItem(){
+    this.selectedItem = null;
+  }
+}
+
+,
+
+<div id="item-detail">
+    <h3>{{item?.name}}</h3>
+    <p>{{item?.description}}</p>
+    <button (click)="clear()">Clear Selection</button>
+</div>
+
+
+,
+
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+
+@Component({
+  selector: 'app-item-detail',
+  templateUrl: './item-detail.component.html',
+  styleUrls: ['./item-detail.component.css']
+})
+export class ItemDetailComponent {
+  
+  @Input()
+  item!:any;
+
+  @Output()
+  clearSelection = new EventEmitter<void>();
+
+  clear(){
+    this.clearSelection.emit();
+  }
+}

@@ -1,0 +1,65 @@
+<h2>Recipes</h2>
+
+<ul>
+    <li *ngFor="let recipe of recipes; let i = index" (click)="selectRecipe(i)">
+        {{recipe.name}}
+    </li>
+</ul>
+
+<app-recipe-detail *ngIf="selectedRecipe" [recipe]="selectedRecipe" (clearSelection)="clearSelectedRecipe()"></app-recipe-detail>
+
+,
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-recipe-list',
+  templateUrl: './recipe-list.component.html',
+  styleUrls: ['./recipe-list.component.css']
+})
+export class RecipeListComponent {
+  recipes = [
+    {name:"Spaghetti Carbonara", description:'A classic Italian pasta dish with eggs, cheese, pancetta, and pepper.'},
+    {name:"Chicken Tikka Masala", description:'Marinated chicken chunks in a creamy tomato curry sauce.'},
+    {name:"Vegetable Stir Fry", description:'Mixed vegetables stir-fried with soy sauce and garlic.'}
+  ]
+
+  selectedRecipe: any = null;
+
+  selectRecipe(index: number){
+    this.selectedRecipe = this.recipes[index];
+  }
+
+  clearSelectedRecipe(){
+    this.selectedRecipe = null;
+  }
+}
+
+,
+
+<div id="recipe-detail">
+    <h3>{{recipe?.name}} Details</h3>
+    <p>{{recipe?.description}}</p>
+    <button (click)="clear()">Clear Selection</button>
+</div>
+
+,
+
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+
+@Component({
+  selector: 'app-recipe-detail',
+  templateUrl: './recipe-detail.component.html',
+  styleUrls: ['./recipe-detail.component.css']
+})
+export class RecipeDetailComponent {
+  @Input()
+  recipe!:any;
+
+  @Output()
+  clearSelection = new EventEmitter<void>()
+
+  clear(){
+    this.clearSelection.emit();
+  }
+}
