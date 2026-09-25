@@ -1,0 +1,226 @@
+import {
+  Inject,
+  Injectable,
+  PLATFORM_ID,
+  signal
+} from '@angular/core';
+
+import {
+  isPlatformBrowser
+} from '@angular/common';
+
+import {
+  Product
+} from '../models/product';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ProductService {
+
+  private readonly storageKey = 'khetal-products';
+  private readonly isBrowser: boolean;
+
+  private readonly defaultProducts: Product[] = [
+    {
+      id: 1,
+      name: 'MS Pipes',
+      category: 'Pipes',
+      shortDescription:
+        'Reliable mild steel pipes for structural and industrial projects.',
+      description:
+        'Premium mild steel pipes suitable for fabrication, construction, industrial frameworks and general engineering applications.',
+      image:
+        'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&q=85',
+      featured: true,
+      available: true
+    },
+    {
+      id: 2,
+      name: 'Galvanised GI Pipes',
+      category: 'Pipes',
+      shortDescription:
+        'Corrosion-resistant pipes for long-lasting performance.',
+      description:
+        'Galvanised iron pipes suited to projects requiring strength, durability and improved resistance against corrosion.',
+      image:
+        'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=85',
+      featured: true,
+      available: true
+    },
+    {
+      id: 3,
+      name: 'Seamless Pipes',
+      category: 'Pipes',
+      shortDescription:
+        'Seamless piping solutions for demanding applications.',
+      description:
+        'Durable seamless pipes designed for industrial and engineering requirements where dependable material performance is important.',
+      image:
+        'https://images.unsplash.com/photo-1530124566582-a618bc2615dc?auto=format&fit=crop&w=1200&q=85',
+      featured: false,
+      available: true
+    },
+    {
+      id: 4,
+      name: 'MS Angles',
+      category: 'Structural Steel',
+      shortDescription:
+        'Steel angles for fabrication and structural frameworks.',
+      description:
+        'Mild steel angles used for framing, supports, fabrication, construction and other structural applications.',
+      image:
+        'https://images.unsplash.com/photo-1518709766631-a6a7f45921c3?auto=format&fit=crop&w=1200&q=85',
+      featured: true,
+      available: true
+    },
+    {
+      id: 5,
+      name: 'MS Bars',
+      category: 'Structural Steel',
+      shortDescription:
+        'Strong steel bars for construction and engineering work.',
+      description:
+        'Mild steel bars available for fabrication, reinforcement, manufacturing and general engineering requirements.',
+      image:
+        'https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=1200&q=85',
+      featured: false,
+      available: true
+    },
+    {
+      id: 6,
+      name: 'MS Flats',
+      category: 'Structural Steel',
+      shortDescription:
+        'Versatile flat steel products for varied requirements.',
+      description:
+        'Mild steel flats suitable for industrial fabrication, frames, brackets and general construction work.',
+      image:
+        'https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&w=1200&q=85',
+      featured: false,
+      available: true
+    },
+    {
+      id: 7,
+      name: 'MS Plates',
+      category: 'Plates',
+      shortDescription:
+        'Heavy-duty steel plates for fabrication and engineering.',
+      description:
+        'Mild steel plates for construction, manufacturing, machinery, fabrication and industrial applications.',
+      image:
+        'https://images.unsplash.com/photo-1565793298595-6a879b1d9492?auto=format&fit=crop&w=1200&q=85',
+      featured: true,
+      available: true
+    },
+    {
+      id: 8,
+      name: 'Roofing Sheets',
+      category: 'Roofing',
+      shortDescription:
+        'Dependable roofing materials for industrial projects.',
+      description:
+        'Roofing sheets suitable for warehouses, industrial structures, commercial buildings and development projects.',
+      image:
+        'https://images.unsplash.com/photo-1632759145351-1d592919f522?auto=format&fit=crop&w=1200&q=85',
+      featured: true,
+      available: true
+    }
+  ];
+
+  readonly products = signal<Product[]>([]);
+
+  constructor(
+    @Inject(PLATFORM_ID) platformId: object
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
+    this.loadProducts();
+  }
+
+  private loadProducts(): void {
+
+    if (!this.isBrowser) {
+      this.products.set(this.defaultProducts);
+      return;
+    }
+
+    const storedProducts =
+      localStorage.getItem(this.storageKey);
+
+    if (!storedProducts) {
+      this.products.set(this.defaultProducts);
+      this.saveProducts();
+      return;
+    }
+
+    try {
+      const parsedProducts =
+        JSON.parse(storedProducts) as Product[];
+
+      this.products.set(parsedProducts);
+    } catch {
+      this.products.set(this.defaultProducts);
+      this.saveProducts();
+    }
+  }
+
+  private saveProducts(): void {
+
+    if (!this.isBrowser) {
+      return;
+    }
+
+    localStorage.setItem(
+      this.storageKey,
+      JSON.stringify(this.products())
+    );
+  }
+
+  getProductById(id: number): Product | undefined {
+    return this.products().find(
+      product => product.id === id
+    );
+  }
+
+  addProduct(product: Omit<Product, 'id'>): void {
+
+    const newProduct: Product = {
+      ...product,
+      id: Date.now()
+    };
+
+    this.products.update(products => [
+      newProduct,
+      ...products
+    ]);
+
+    this.saveProducts();
+  }
+
+  updateProduct(updatedProduct: Product): void {
+
+    this.products.update(products =>
+      products.map(product =>
+        product.id === updatedProduct.id
+          ? { ...updatedProduct }
+          : product
+      )
+    );
+
+    this.saveProducts();
+  }
+
+  deleteProduct(id: number): void {
+
+    this.products.update(products =>
+      products.filter(product => product.id !== id)
+    );
+
+    this.saveProducts();
+  }
+
+  resetProducts(): void {
+    this.products.set([...this.defaultProducts]);
+    this.saveProducts();
+  }
+}
