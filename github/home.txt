@@ -1,0 +1,410 @@
+
+<!-- Hero Banner -->
+<section class="hero">
+    <div class="overlay">
+        <h1>Khetal Pipes & Tubes</h1>
+        <p>Trusted Supplier Of MS Pipes, MS Angles, MS Channels, MS Beams, MS Plates & TMT Bars</p>
+        <button>Explore Products</button>
+    </div>
+</section>
+
+<!-- Products -->
+<section class="products">
+    <h2>Our Products</h2>
+    <div class="product-grid">
+        <!-- MS Pipes -->
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1764835746713-34a671e73569?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="MS Pipes">
+            <h3>MS Pipes</h3>
+        </div>
+
+        <!-- MS Angles -->
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1651890318280-c5e35ef92f85?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="MS Angles">
+            <h3>MS Angles</h3>
+        </div>
+
+        <!-- MS Channels -->
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1701788607416-f1b5dd5a09ec?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="MS Channels">
+            <h3>MS Channels</h3>
+        </div>
+
+        <!-- MS Beams -->
+        <div class="card">
+            <img src="https://unsplash.com" alt="MS Beams">
+            <h3>MS Beams</h3>
+        </div>
+
+        <!-- MS Plates -->
+        <div class="card">
+            <img src="https://unsplash.com" alt="MS Plates">
+            <h3>MS Plates</h3>
+        </div>
+
+        <!-- TMT Bars -->
+        <div class="card">
+            <img src="https://unsplash.com" alt="TMT Bars">
+            <h3>TMT Bars</h3>
+        </div>
+    </div>
+</section>
+
+<!-- Statistics -->
+<section class="stats">
+    <div class="stat-item">
+        <h2>15+</h2>
+        <p>Premium Products</p>
+    </div>
+    <div class="stat-item">
+        <h2>10+</h2>
+        <p>Years Experience</p>
+    </div>
+    <div class="stat-item">
+        <h2>1000+</h2>
+        <p>Projects Supplied</p>
+    </div>
+</section>
+
+<!-- Why Us -->
+<section class="why-us">
+    <h2>Why Choose Us</h2>
+    <div class="why-grid">
+        <div class="why-item">✅ Premium Quality Material</div>
+        <div class="why-item">✅ Competitive Pricing</div>
+        <div class="why-item">✅ Fast Delivery</div>
+        <div class="why-item">✅ Trusted Supplier</div>
+    </div>
+</section>
+
+<!-- Contact -->
+<section class="contact">
+    <h2>Contact Us</h2>
+    <form>
+        <input type="text" placeholder="Your Name" required>
+        <input type="tel" placeholder="Phone Number" required>
+        <textarea placeholder="Enter Your Requirement" required></textarea>
+        <button type="submit">Send Enquiry</button>
+    </form>
+</section>
+
+
+
+
+
+--------------------------------------------------------------------------------------
+
+
+
+
+/* =========================
+   Welcome Popup
+========================= */
+.test-css{
+color:red;
+font-size:50px;
+}
+.welcome-popup {
+  position: fixed;
+  top: 100px;
+  right: 30px;
+  width: 350px;
+  background: #fff;
+  padding: 25px;
+  border-radius: 20px;
+  z-index: 999;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+  animation: slideIn 0.5s ease;
+}
+
+.close-btn {
+  float: right;
+  border: none;
+  background: red;
+  color: #fff;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* =========================
+   Hero Section
+========================= */
+
+.hero {
+  height: 100vh;
+  background:  linear-gradient(
+rgba(0, 0, 0, 0.55),
+rgba(0, 0, 0, 0.55)
+),  url('https://images.unsplash.com/photo-1666219462105-2909c2d72d01?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.overlay {
+  text-align: center;
+  color: white;
+  background: rgba(0, 0, 0, 0.55);
+  padding: 40px;
+  border-radius: 20px;
+  max-width: 700px;
+}
+
+.overlay h1 {
+  font-size: 60px;
+  margin-bottom: 20px;
+}
+
+.overlay p {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.overlay button {
+  background: #ff6b00;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.overlay button:hover {
+  background: #e45d00;
+  transform: scale(1.05);
+}
+
+/* =========================
+   Products Section
+========================= */
+
+.products {
+  padding: 80px 50px;
+  background: #f8fafc;
+}
+
+.products h2 {
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 40px;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.card {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: 0.4s;
+}
+
+.card:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.card img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+.card h3 {
+  text-align: center;
+  padding: 20px;
+  font-size: 22px;
+}
+
+/* =========================
+   Statistics
+========================= */
+
+.stats {
+  display: flex;
+  justify-content: space-around;
+  background: #111827;
+  color: white;
+  padding: 60px;
+  text-align: center;
+}
+
+.stats h2 {
+  color: #ff6b00;
+  font-size: 40px;
+}
+
+.stats p {
+  font-size: 18px;
+}
+
+/* =========================
+   Why Us
+========================= */
+
+.why-us {
+  padding: 80px 40px;
+  text-align: center;
+}
+
+.why-us h2 {
+  margin-bottom: 40px;
+  font-size: 40px;
+}
+
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.why-grid div {
+  background: #f4f4f4;
+  padding: 25px;
+  border-radius: 15px;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+/* =========================
+   Contact Section
+========================= */
+
+.contact {
+  padding: 80px 20px;
+  background: #f8fafc;
+}
+
+.contact h2 {
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 40px;
+}
+
+.contact form {
+  max-width: 600px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.contact input,
+.contact textarea {
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+}
+
+.contact textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.contact button {
+  background: #ff6b00;
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.contact button:hover {
+  background: #e45d00;
+}
+
+/* =========================
+   Responsive Design
+========================= */
+
+@media (max-width: 768px) {
+  .overlay h1 {
+    font-size: 35px;
+  }
+
+  .overlay p {
+    font-size: 18px;
+  }
+
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .why-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stats {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .welcome-popup {
+    width: 90%;
+    right: 5%;
+  }
+}
+
+
+
+
+
+
+
+
+
+-----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core'; // 1. Import ChangeDetectorRef
+import { CommonModule } from '@angular/common';
+
+@Component({
+  selector: 'app-home',
+  standalone: true,
+  templateUrl: './home.html',
+  imports: [CommonModule],
+  styleUrl: './home.css'
+})
+export class HomeComponent implements OnInit {
+  showPopup = true;
+
+  // 2. Inject ChangeDetectorRef in the constructor
+  constructor(private cdr: ChangeDetectorRef) {}
+
+  ngOnInit(): void {
+    setTimeout(() => {
+      this.showPopup = false;
+      this.cdr.detectChanges(); // 3. Force Angular to update the view
+    }, 9000);
+  }
+}
